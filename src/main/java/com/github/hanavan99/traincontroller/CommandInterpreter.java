@@ -26,6 +26,7 @@ public class CommandInterpreter {
             Channel channel = conn.createChannel();
             RabbitMQCommandBase cmd = new RabbitMQCommandBase(channel, "ttyS0", CommandSet.TMCC);
             new DataContext(channel, cmd);
+            log.info("Command interpreter is now running.");
             Thread.sleep(Long.MAX_VALUE);
         } catch (Exception ex) {
             log.catching(ex);
