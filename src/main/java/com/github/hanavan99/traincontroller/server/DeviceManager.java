@@ -16,13 +16,12 @@ import org.apache.logging.log4j.Logger;
 public class DeviceManager extends TopicConsumer {
     private static final Logger log = LogManager.getLogger();
     private final Map<String, DeviceHandler> devices;
-    private final Channel channel;
 
     @Override
     public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
         String port = new String(body, "UTF-8");
         if (!devices.containsKey(port)) {
-            devices.put(port, new DeviceHandler(channel, port));
+            devices.put(port, new DeviceHandler(getChannel(), port));
             log.info("Opened serial port {}.", port);
         }
     }
@@ -30,6 +29,5 @@ public class DeviceManager extends TopicConsumer {
     public DeviceManager(Channel channel) throws IOException {
         super(channel, TopicNames.DEVICE_START_TOPIC);
         devices = new HashMap<String, DeviceHandler>();
-        this.channel = channel;
     }
 }
