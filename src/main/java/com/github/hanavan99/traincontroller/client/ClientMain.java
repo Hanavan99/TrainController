@@ -11,7 +11,7 @@ public class ClientMain {
 		frame.add(new ClientMainPanel("192.168.1.247"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(0, 0, 800, 480);
-		// frame.setUndecorated(true);
+		frame.setUndecorated(true);
 		frame.setVisible(true);
 	}
 
