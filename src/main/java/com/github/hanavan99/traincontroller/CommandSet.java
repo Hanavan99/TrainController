@@ -3,7 +3,8 @@ package com.github.hanavan99.traincontroller;
 public enum CommandSet {
     TMCC1Switch(0xFE8000, 7, 7, 5, 2, 0, 5),
     TMCC1Route(0xFED000, 7, 5, 5, 2, 0, 5),
-    TMCC1Engine(0xFE0000, 7, 7, 5, 2, 0, 5);
+    TMCC1Engine(0xFE0000, 7, 7, 5, 2, 0, 5),
+    TMCC1EngineRaw(0xFE0000, 7, 7, 0, 7, 0, 0);
 
     private final int constant;
     private final int address_start;
