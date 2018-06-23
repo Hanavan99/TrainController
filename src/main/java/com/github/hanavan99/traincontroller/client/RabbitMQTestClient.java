@@ -7,7 +7,7 @@ import com.github.hanavan99.traincontroller.core.enums.CommandSet;
 public class RabbitMQTestClient {
 
 	public static void main(String[] args) throws Exception {
-		RabbitMQCommandBase base = new RabbitMQCommandBase("ttyS0", CommandSet.TMCC);
+		RabbitMQCommandBase base = new RabbitMQCommandBase("192.168.1.147", "ttyS0", CommandSet.TMCC);
 		base.start();
 		base.switchThrowOut(new Switch(1, null));
 		sleep(1000);

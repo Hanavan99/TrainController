@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,8 +16,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.github.hanavan99.traincontroller.core.Engine;
-import com.github.hanavan99.traincontroller.core.NetCommandBase;
+import com.github.hanavan99.traincontroller.core.RabbitMQCommandBase;
 import com.github.hanavan99.traincontroller.core.Switch;
+import com.github.hanavan99.traincontroller.core.enums.CommandSet;
 import com.github.hanavan99.traincontroller.core.enums.CommandType;
 import com.github.hanavan99.traincontroller.core.enums.RequestType;
 import com.github.hanavan99.traincontroller.net.packets.RequestPacket;
@@ -43,59 +43,32 @@ public class ClientMainPanel extends JPanel {
 	private JButton switchthrough = new JButton("Through");
 	private JButton switchout = new JButton("Out");
 
-	public ClientMainPanel(Socket socket) throws IOException {
+	public ClientMainPanel(String address) throws IOException {
 
-		final NetCommandBase base = new NetCommandBase("192.168.1.247", 12345, null);
+		final RabbitMQCommandBase base = new RabbitMQCommandBase(address, "ttyS0", CommandSet.TMCC);
 		base.start();
-		final ObjectInputStream in = base.createObjectInputStream();
+		// final ObjectInputStream in = base.createObjectInputStream();
 
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Object o = in.readObject();
-						if (o instanceof ResponsePacket) {
-							ResponsePacket response = (ResponsePacket) o;
-							switch (response.getRequestType()) {
-							case GET_ACCESSORIES:
-								break;
-							case GET_ENGINES:
-								engines.removeAllItems();
-								for (Engine eng : (Engine[]) response.getArgs()) {
-									engines.addItem(eng);
-								}
-								break;
-							case GET_ROUTES:
-								break;
-							case GET_SWITCHES:
-								switches.removeAllItems();
-								for (Switch sw : (Switch[]) response.getArgs()) {
-									switches.addItem(sw);
-								}
-								break;
-							case GET_USER_PERMISSIONS:
-								break;
-							case SET_ACCESSORY:
-								break;
-							case SET_ENGINE:
-								break;
-							case SET_ROUTE:
-								break;
-							case SET_SWITCH:
-								break;
-							default:
-								break;
+		/*
+		 * Thread t = new Thread(new Runnable() {
+		 * 
+		 * @Override public void run() { while (true) { try { Object o =
+		 * in.readObject(); if (o instanceof ResponsePacket) { ResponsePacket response =
+		 * (ResponsePacket) o; switch (response.getRequestType()) { case
+		 * GET_ACCESSORIES: break; case GET_ENGINES: engines.removeAllItems(); for
+		 * (Engine eng : (Engine[]) response.getArgs()) { engines.addItem(eng); } break;
+		 * case GET_ROUTES: break; case GET_SWITCHES: switches.removeAllItems(); for
+		 * (Switch sw : (Switch[]) response.getArgs()) { switches.addItem(sw); } break;
+		 * case GET_USER_PERMISSIONS: break; case SET_ACCESSORY: break; case SET_ENGINE:
+		 * break; case SET_ROUTE: break; case SET_SWITCH: break; default: break;
+		 * 
+		 * } } } catch (Exception e) { e.printStackTrace(); } } } }); t.start();
+		 */
 
-							}
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		t.start();
+		// TEST CODE ONLY
+		engines.addItem(new Engine(85, "BNSF SD70ACe"));
+		switches.addItem(new Switch(1, "Main Switch 1"));
+		switches.addItem(new Switch(2, "Main Switch 2"));
 
 		setLayout(null);
 
@@ -234,8 +207,8 @@ public class ClientMainPanel extends JPanel {
 			}
 		});
 
-		base.sendCommand(new RequestPacket(RequestType.GET_ENGINES, null, null));
-		base.sendCommand(new RequestPacket(RequestType.GET_SWITCHES, null, null));
+		// base.sendCommand(new RequestPacket(RequestType.GET_ENGINES, null, null));
+		// base.sendCommand(new RequestPacket(RequestType.GET_SWITCHES, null, null));
 
 	}
 
