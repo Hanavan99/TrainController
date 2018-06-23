@@ -7,6 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+import java.io.ObjectInputStream;
+import java.util.concurrent.TimeoutException;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -19,6 +22,12 @@ import com.github.hanavan99.traincontroller.core.Engine;
 import com.github.hanavan99.traincontroller.core.RabbitMQCommandBase2;
 import com.github.hanavan99.traincontroller.core.Switch;
 import com.github.hanavan99.traincontroller.core.enums.CommandType;
+import com.github.hanavan99.traincontroller.core.enums.RequestType;
+import com.github.hanavan99.traincontroller.net.packets.RequestPacket;
+import com.github.hanavan99.traincontroller.net.packets.ResponsePacket;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 
 public class ClientMainPanel extends JPanel {
 
@@ -44,6 +53,7 @@ public class ClientMainPanel extends JPanel {
 	public ClientMainPanel(String address) throws IOException {
 
 		final RabbitMQCommandBase2 base = new RabbitMQCommandBase2(address);
+
 		base.start();
 		// final ObjectInputStream in = base.createObjectInputStream();
 

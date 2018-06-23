@@ -17,12 +17,12 @@
         },
         {
             "type": "java",
-            "name": "TrainController Server Device List (Test)",
+            "name": "TrainController Command Interpreter",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopOnEntry": false,
-            "mainClass": "com.github.hanavan99.traincontroller.server.DeviceListProviderTest",
+            "mainClass": "com.github.hanavan99.traincontroller.CommandInterpreter",
             "projectName": "TrainController",
             "args": ""
         },
