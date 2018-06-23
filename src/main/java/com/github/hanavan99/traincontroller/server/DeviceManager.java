@@ -24,10 +24,11 @@ public class DeviceManager extends TopicConsumer {
             devices.put(port, new DeviceHandler(getChannel(), port));
             log.info("Opened serial port {}.", port);
         }
+        getChannel().basicAck(envelope.getDeliveryTag(), false);
     }
 
     public DeviceManager(Channel channel) throws IOException {
-        super(channel, TopicNames.DEVICE_START_TOPIC);
+        super(channel, TopicNames.DEVICE_START_TOPIC, false);
         devices = new HashMap<String, DeviceHandler>();
     }
 }
