@@ -14,6 +14,13 @@ public class DeviceHandler extends TopicConsumer {
 
     @Override
     public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
+        if (!this.port.isOpen()) {
+            this.port.setBaudRate(9600);
+            this.port.setNumDataBits(8);
+            this.port.setNumStopBits(1);
+            this.port.setParity(SerialPort.NO_PARITY);
+            this.port.openPort();
+        }
         this.port.writeBytes(body, body.length);
     }
 
@@ -22,13 +29,14 @@ public class DeviceHandler extends TopicConsumer {
         this.port.closePort();
     }
 
-    public DeviceHandler(Channel channel, String port) throws IOException {
-        super(channel, String.format(TopicNames.DEVICE_TOPIC, port));
-        this.port = SerialPort.getCommPort(port);
-        this.port.setBaudRate(9600);
-		this.port.setNumDataBits(8);
-		this.port.setNumStopBits(1);
-        this.port.setParity(SerialPort.NO_PARITY);
-        this.port.openPort();
+    public static void createAll(Channel channel) throws IOException {
+        for (SerialPort port : SerialPort.getCommPorts()) {
+            new DeviceHandler(channel, port);
+        }
+    }
+
+    public DeviceHandler(Channel channel, SerialPort port) throws IOException {
+        super(channel, String.format(TopicNames.DEVICE_TOPIC, port.getSystemPortName()));
+        this.port = port;
     }
 }

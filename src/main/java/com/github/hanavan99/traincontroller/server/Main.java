@@ -53,8 +53,7 @@ public class Main {
             connectionFactory.setPassword("guest");
             Connection connection = connectionFactory.newConnection();
             Channel channel = connection.createChannel();
-            new DeviceListProvider(channel);
-            new DeviceManager(channel);
+            DeviceHandler.createAll(channel);
 			Thread.sleep(Long.MAX_VALUE);
 		} catch (InterruptedException ex) {
             rabbitMq.stop();
