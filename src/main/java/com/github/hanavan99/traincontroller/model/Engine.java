@@ -52,20 +52,20 @@ public class Engine extends CommandableObject {
         for (CommandType cmd : COMMANDS) {
             register(new EngineCommandConsumer(getChannel(), this, TopicNames.ENGINE_COMMAND, cmd) {
                 @Override
-                public void handle(CommandQueue queue, CommandType command, int address) throws IOException {
-                    queue.runOnce(command, address);
+                public void handle(CommandQueue queue, CommandType command, int address, int data) throws IOException {
+                    queue.runOnce(command, address, data);
                 }
             });
             register(new EngineCommandConsumer(getChannel(), this, TopicNames.ENGINE_START_COMMAND, cmd) {
                 @Override
-                public void handle(CommandQueue queue, CommandType command, int address) throws IOException {
-                    queue.start(command, address);
+                public void handle(CommandQueue queue, CommandType command, int address, int data) throws IOException {
+                    queue.start(command, address, data);
                 }
             });
             register(new EngineCommandConsumer(getChannel(), this, TopicNames.ENGINE_END_COMMAND, cmd) {
                 @Override
-                public void handle(CommandQueue queue, CommandType command, int address) throws IOException {
-                    queue.stop(command, address);
+                public void handle(CommandQueue queue, CommandType command, int address, int data) throws IOException {
+                    queue.stop(command, address, data);
                 }
             });
         }

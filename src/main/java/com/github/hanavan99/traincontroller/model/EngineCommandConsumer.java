@@ -16,8 +16,15 @@ public abstract class EngineCommandConsumer extends TopicConsumer {
     public abstract void handle(CommandQueue queue, CommandType command, int address, int data) throws IOException;
 
     @Override
-    public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
-        handle(engine.getCommandBase(), command, engine.getID());
+    public void handleDeliverySafe(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
+        String msg = new String(body, "UTF-8");
+        int data = -1;
+        try {
+            data = Integer.parseInt(msg);
+        } catch (NumberFormatException ex) {
+            data = -1;
+        }
+        handle(engine.getCommandBase(), command, engine.getID(), data);
     }
 
     public EngineCommandConsumer(Channel channel, Engine engine, String topic, CommandType command) throws IOException {

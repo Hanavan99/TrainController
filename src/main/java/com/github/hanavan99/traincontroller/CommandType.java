@@ -3,10 +3,10 @@ package com.github.hanavan99.traincontroller;
 public enum CommandType {
     RouteClear(CommandSet.TMCC1Route, 1, 0x0C, "clear"),
     RouteThrow(CommandSet.TMCC1Route, 0, 0x1F, "throw"),
-    SwitchAssignRouteThrough(CommandSet.TMCC1Switch, 2, -1, "assign_route_through"),
-    SwitchAssignRouteOut(CommandSet.TMCC1Switch, 3, -1, "assign_route_out"),
-    SwitchThrowThrough(CommandSet.TMCC1Switch, 0, 0, "throw_through"),
-    SwitchThrowOut(CommandSet.TMCC1Switch, 0, 0x1F, "throw_out"),
+    SwitchAssignRouteThrough(CommandSet.TMCC1Switch, 2, -1, "assignRouteThrough"),
+    SwitchAssignRouteOut(CommandSet.TMCC1Switch, 3, -1, "assignRouteOut"),
+    SwitchThrowThrough(CommandSet.TMCC1Switch, 0, 0, "throwThrough"),
+    SwitchThrowOut(CommandSet.TMCC1Switch, 0, 0x1F, "throwOut"),
     EngineCommandDirectionForward(CommandSet.TMCC1EngineRaw, 0x00, 0, "directionForward"),
     EngineCommandDirectionToggle(CommandSet.TMCC1EngineRaw, 0x01, 0, "directionToggle"),
     EngineCommandDirectionReverse(CommandSet.TMCC1EngineRaw, 0x03, 0, "directionReverse"),
@@ -26,8 +26,8 @@ public enum CommandType {
     EngineCommandAux2Option1(CommandSet.TMCC1EngineRaw, 0x0d, 0, "aux2Option1"),
     EngineCommandAux2Option2(CommandSet.TMCC1EngineRaw, 0x0e, 0, "aux2Option2"),
     EngineCommandAux2On(CommandSet.TMCC1EngineRaw, 0x0f, 0, "aux2On"),
-    EngineCommandNumericN(CommandSet.TMCC1EngineRaw, 0x10, 0, "numericN"),
-    EngineCommandAssignTrain(CommandSet.TMCC1EngineRaw, 0x30, 0, "assignTrain"),
+    EngineCommandNumericN(CommandSet.TMCC1EngineExtraCommandBit, 0, -1, "numericN"),
+    EngineCommandAssignTrain(CommandSet.TMCC1EngineExtraCommandBit, 3, -1, "assignTrain"),
     EngineCommandAssignSingleForward(CommandSet.TMCC1EngineRaw, 0x20, 0, "assignSingleForward"),
     EngineCommandAssignSingleReverse(CommandSet.TMCC1EngineRaw, 0x24, 0, "assignSingleReverse"),
     EngineCommandAssignHeadForward(CommandSet.TMCC1EngineRaw, 0x21, 0, "assignHeadForward"),
@@ -40,8 +40,8 @@ public enum CommandType {
     EngineCommandMomentumMedium(CommandSet.TMCC1EngineRaw, 0x29, 0, "momentumMedium"),
     EngineCommandMomentumHigh(CommandSet.TMCC1EngineRaw, 0x2a, 0, "momentumHigh"),
     EngineCommandSetAddress(CommandSet.TMCC1EngineRaw, 0x2b, 0, "setAddress"),
-    EngineCommandSpeedAbsolute(CommandSet.TMCC1EngineRaw, 0x60, 0, "speedAbsolute"),
-    EngineCommandSpeedRelative(CommandSet.TMCC1EngineRaw, 0x40, 0, "speedRelative");
+    EngineCommandSpeedAbsolute(CommandSet.TMCC1EngineExtraCommandBit, 3, -1, "speedAbsolute"),
+    EngineCommandSpeedRelative(CommandSet.TMCC1EngineExtraCommandBit, 4, -1, "speedRelative");
 
     private final CommandSet set;
     private final int command;
