@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +24,9 @@ import com.github.hanavan99.traincontroller.core.enums.CommandType;
 import com.github.hanavan99.traincontroller.core.enums.RequestType;
 import com.github.hanavan99.traincontroller.net.packets.RequestPacket;
 import com.github.hanavan99.traincontroller.net.packets.ResponsePacket;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 
 public class ClientMainPanel extends JPanel {
 
@@ -43,9 +47,15 @@ public class ClientMainPanel extends JPanel {
 	private JButton switchthrough = new JButton("Through");
 	private JButton switchout = new JButton("Out");
 
-	public ClientMainPanel(String address) throws IOException {
-
-		final RabbitMQCommandBase base = new RabbitMQCommandBase(address, "ttyS0", CommandSet.TMCC);
+	public ClientMainPanel(String address) throws IOException, TimeoutException {
+		ConnectionFactory factory = new ConnectionFactory();
+		factory.setHost("192.168.1.247");
+		factory.setVirtualHost("/");
+		factory.setUsername("root");
+		factory.setPassword("root");
+		Connection conn = factory.newConnection();
+		Channel channel = conn.createChannel();
+		final RabbitMQCommandBase base = new RabbitMQCommandBase(channel, "ttyS0", CommandSet.TMCC);
 		base.start();
 		// final ObjectInputStream in = base.createObjectInputStream();
 
