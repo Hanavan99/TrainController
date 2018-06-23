@@ -2,6 +2,7 @@ package com.github.hanavan99.traincontroller.model;
 
 import java.io.IOException;
 
+import com.github.hanavan99.traincontroller.CommandType;
 import com.github.hanavan99.traincontroller.TopicConsumer;
 import com.github.hanavan99.traincontroller.TopicNames;
 import com.rabbitmq.client.Channel;
@@ -13,9 +14,7 @@ public class RouteThrowConsumer extends TopicConsumer {
 
     @Override
     public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
-        com.github.hanavan99.traincontroller.core.Route r = new com.github.hanavan99.traincontroller.core.Route();
-        r.setID(route.getID());
-        route.getCommandBase().routeThrow(r);
+        route.getCommandBase().runOnce(CommandType.RouteThrow, route.getID());
     }
 
     public RouteThrowConsumer(Channel channel, Route route) throws IOException {

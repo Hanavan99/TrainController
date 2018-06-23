@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.hanavan99.traincontroller.CommandQueue;
 import com.github.hanavan99.traincontroller.TopicConsumer;
 import com.github.hanavan99.traincontroller.TopicNames;
-import com.github.hanavan99.traincontroller.core.RabbitMQCommandBase;
 import com.rabbitmq.client.Channel;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,14 +19,14 @@ public abstract class CommandableObject {
     private final Map<String, String> properties;
     private final List<TopicConsumer> subscriptions;
     private final Channel channel;
-    private final RabbitMQCommandBase cmd;
+    private final CommandQueue cmd;
     final CommandableObjectList list;
 
     public Channel getChannel() {
         return channel;
     }
 
-    public RabbitMQCommandBase getCommandBase() {
+    public CommandQueue getCommandBase() {
         return cmd;
     }
 
@@ -77,7 +77,7 @@ public abstract class CommandableObject {
         }
     }
 
-    public CommandableObject(Channel channel, CommandableObjectList list, String name, RabbitMQCommandBase cmd) {
+    public CommandableObject(Channel channel, CommandableObjectList list, String name, CommandQueue cmd) {
         properties = new HashMap<String, String>();
         subscriptions = new ArrayList<TopicConsumer>();
         this.channel = channel;

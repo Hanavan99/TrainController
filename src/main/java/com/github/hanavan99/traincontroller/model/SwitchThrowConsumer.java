@@ -2,6 +2,7 @@ package com.github.hanavan99.traincontroller.model;
 
 import java.io.IOException;
 
+import com.github.hanavan99.traincontroller.CommandType;
 import com.github.hanavan99.traincontroller.TopicConsumer;
 import com.github.hanavan99.traincontroller.TopicNames;
 import com.rabbitmq.client.Channel;
@@ -20,10 +21,10 @@ public class SwitchThrowConsumer extends TopicConsumer {
         String mode = new String(body, "UTF-8");
         switch (mode) {
             case "through":
-                s.getCommandBase().switchThrowThrough(new com.github.hanavan99.traincontroller.core.Switch(s.getID(), null));
+                s.getCommandBase().runOnce(CommandType.SwitchThrowThrough, s.getID());
                 break;
             case "out":
-                s.getCommandBase().switchThrowOut(new com.github.hanavan99.traincontroller.core.Switch(s.getID(), null));
+                s.getCommandBase().runOnce(CommandType.SwitchThrowOut, s.getID());
                 break;
             default:
                 log.warn("Unknown throw type '{}'", mode);

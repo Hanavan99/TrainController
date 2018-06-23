@@ -24,7 +24,7 @@ public class CommandInterpreter {
             factory.setPassword("root");
             Connection conn = factory.newConnection();
             Channel channel = conn.createChannel();
-            RabbitMQCommandBase cmd = new RabbitMQCommandBase(channel, "ttyS0", CommandSet.TMCC);
+            CommandQueue cmd = new CommandQueue(channel, "ttyS0");
             new DataContext(channel, cmd);
             log.info("Command interpreter is now running.");
             Thread.sleep(Long.MAX_VALUE);

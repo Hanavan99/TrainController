@@ -4,19 +4,19 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.hanavan99.traincontroller.CommandQueue;
 import com.github.hanavan99.traincontroller.TopicNames;
-import com.github.hanavan99.traincontroller.core.RabbitMQCommandBase;
 import com.rabbitmq.client.Channel;
 
 public abstract class CommandableObjectList {
     private final Map<String, CommandableObject> list;
     private final Channel channel;
-    private final RabbitMQCommandBase cmd;
+    private final CommandQueue cmd;
 
     public abstract String getObjectType();
     public abstract CommandableObject create(String name) throws IOException;
 
-    public RabbitMQCommandBase getCommandBase() {
+    public CommandQueue getCommandBase() {
         return cmd;
     }
 
@@ -60,7 +60,7 @@ public abstract class CommandableObjectList {
         return list.values().toArray(new CommandableObject[0]);
     }
 
-    public CommandableObjectList(Channel channel, RabbitMQCommandBase cmd) throws IOException {
+    public CommandableObjectList(Channel channel, CommandQueue cmd) throws IOException {
         list = new HashMap<String, CommandableObject>();
         new NewObjectConsumer(channel, this);
         //new ListObjectConsumer(channel, this);

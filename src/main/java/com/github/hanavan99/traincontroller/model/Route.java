@@ -2,7 +2,7 @@ package com.github.hanavan99.traincontroller.model;
 
 import java.io.IOException;
 
-import com.github.hanavan99.traincontroller.core.RabbitMQCommandBase;
+import com.github.hanavan99.traincontroller.CommandQueue;
 import com.rabbitmq.client.Channel;
 
 public class Route extends CommandableObject {
@@ -13,7 +13,7 @@ public class Route extends CommandableObject {
         register(new RouteClearConsumer(getChannel(), this));
     }
 
-    public Route(Channel channel, RouteList list, String name, RabbitMQCommandBase cmd) {
+    public Route(Channel channel, RouteList list, String name, CommandQueue cmd) {
         super(channel, list, name, cmd);
     }
 }
