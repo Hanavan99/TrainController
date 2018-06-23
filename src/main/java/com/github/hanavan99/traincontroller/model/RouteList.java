@@ -5,21 +5,18 @@ import java.io.IOException;
 import com.github.hanavan99.traincontroller.core.RabbitMQCommandBase;
 import com.rabbitmq.client.Channel;
 
-public class SwitchList extends CommandableObjectList {
-	private final RouteList routes;
-
+public class RouteList extends CommandableObjectList {
 	@Override
 	public String getObjectType() {
-		return "switch";
+		return "route";
 	}
 
 	@Override
 	public CommandableObject create(String name) throws IOException {
-		return new Switch(getChannel(), this, name, getCommandBase(), routes);
+		return new Route(getChannel(), this, name, getCommandBase());
     }
     
-    public SwitchList(Channel channel, RabbitMQCommandBase cmd, RouteList routes) throws IOException {
-		super(channel, cmd);
-		this.routes = routes;
+    public RouteList(Channel channel, RabbitMQCommandBase cmd) throws IOException {
+        super(channel, cmd);
     }
 }

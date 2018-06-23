@@ -56,10 +56,14 @@ public abstract class CommandableObjectList {
         return list.keySet().toArray(new String[0]);
     }
 
+    public CommandableObject[] getValues() {
+        return list.values().toArray(new CommandableObject[0]);
+    }
+
     public CommandableObjectList(Channel channel, RabbitMQCommandBase cmd) throws IOException {
         list = new HashMap<String, CommandableObject>();
         new NewObjectConsumer(channel, this);
-        new ListObjectConsumer(channel, this);
+        //new ListObjectConsumer(channel, this);
         this.channel = channel;
         this.cmd = cmd;
     }
