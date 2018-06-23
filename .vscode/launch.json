@@ -28,6 +28,17 @@
         },
         {
             "type": "java",
+            "name": "TrainController Shell",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "com.github.hanavan99.traincontroller.Shell",
+            "projectName": "TrainController",
+            "args": ""
+        },
+        {
+            "type": "java",
             "name": "Debug (Attach)",
             "request": "attach",
             "hostName": "localhost",
