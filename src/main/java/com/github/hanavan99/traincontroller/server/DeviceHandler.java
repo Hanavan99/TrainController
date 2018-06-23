@@ -9,7 +9,11 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.AMQP.BasicProperties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class DeviceHandler extends TopicConsumer {
+    private static final Logger log = LogManager.getLogger();
     private final SerialPort port;
 
     @Override
@@ -38,5 +42,6 @@ public class DeviceHandler extends TopicConsumer {
     public DeviceHandler(Channel channel, SerialPort port) throws IOException {
         super(channel, String.format(TopicNames.DEVICE_TOPIC, port.getSystemPortName()));
         this.port = port;
+        log.info("Found serial port %s.", port.getSystemPortName());
     }
 }
