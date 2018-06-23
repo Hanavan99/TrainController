@@ -36,6 +36,8 @@ public class PacketServer {
 	private SerialCommandBase base;
 	private ResourceManager manager;
 
+	private static final org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.LogManager.getLogger();
+
 	public PacketServer() {
 		manager = new ResourceManager(new File("."));
 	}
@@ -44,7 +46,7 @@ public class PacketServer {
 		serverThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("Server thread started");
+				logger.info("Server thread started");
 				try {
 					server = new ServerSocket();
 					if (address == null) {
@@ -56,7 +58,7 @@ public class PacketServer {
 						try {
 							Thread.sleep(1);
 							final Socket client = server.accept();
-							System.out.println("Client connected");
+							logger.info("Client connected");
 							Thread clientThread = new Thread(new Runnable() {
 								@Override
 								public void run() {
@@ -67,7 +69,7 @@ public class PacketServer {
 											try {
 												Object packet = in.readObject();
 												if (packet instanceof CommandPacket) {
-													System.out.println("Recieved command");
+													logger.info("Recieved command");
 													CommandPacket command = (CommandPacket) packet;
 													switch (command.getType()) {
 													case NORMAL:
@@ -84,24 +86,24 @@ public class PacketServer {
 														break;
 													}
 												} else if (packet instanceof RequestPacket) {
-													System.out.println("Recieved request");
+													logger.info("Recieved request");
 													RequestPacket request = (RequestPacket) packet;
 													switch (request.getRequestType()) {
 													case GET_ACCESSORIES:
 														out.writeObject(new ResponsePacket(RequestType.GET_ACCESSORIES, manager.getAccessories()));
-														System.out.println("Sent " + manager.getAccessories().length + " accessory entries to client");
+														logger.info("Sent " + manager.getAccessories().length + " accessory entries to client");
 														break;
 													case GET_ENGINES:
 														out.writeObject(new ResponsePacket(RequestType.GET_ENGINES, manager.getEngines()));
-														System.out.println("Sent " + manager.getEngines().length + " engine entries to client");
+														logger.info("Sent " + manager.getEngines().length + " engine entries to client");
 														break;
 													case GET_ROUTES:
 														out.writeObject(new ResponsePacket(RequestType.GET_ROUTES, manager.getRoutes()));
-														System.out.println("Sent " + manager.getRoutes().length + " route entries to client");
+														logger.info("Sent " + manager.getRoutes().length + " route entries to client");
 														break;
 													case GET_SWITCHES:
 														out.writeObject(new ResponsePacket(RequestType.GET_SWITCHES, manager.getSwitches()));
-														System.out.println("Sent " + manager.getSwitches().length + " switch entries to client");
+														logger.info("Sent " + manager.getSwitches().length + " switch entries to client");
 														break;
 													case SET_ACCESSORY:
 														manager.updateAccessory((Accessory) request.getArgs()[0]);
@@ -124,33 +126,36 @@ public class PacketServer {
 													}
 												}
 											} catch (IOException e) {
-												System.out.println("Client was disconnected");
+												logger.info("Client was disconnected");
+												logger.catching(e);
 												break;
 											} catch (ClassNotFoundException e) {
-												System.out.println("Serialized object does not exist on the server");
+												logger.info("Serialized object does not exist on the server");
+												logger.catching(e);
 											}
 										}
 									} catch (IOException e) {
-										e.printStackTrace();
+										logger.catching(e);
 									}
 								}
 							});
 							clientThread.start();
 						} catch (InterruptedException e) {
+							logger.catching(e);
 							break;
 						}
 					}
 				} catch (IOException e) {
-					System.out.println("Server socket was closed");
-					e.printStackTrace();
+					logger.info("Server socket was closed");
+					logger.catching(e);
 				}
-				System.out.println("Server thread died");
+				logger.info("Server thread died");
 			}
 		});
 		repeatThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("Repeat thread started");
+				logger.info("Repeat thread started");
 				try {
 					while (true) {
 						Thread.sleep(100);
@@ -161,7 +166,7 @@ public class PacketServer {
 				} catch (InterruptedException e) {
 
 				}
-				System.out.println("Repeat thread died");
+				logger.info("Repeat thread died");
 			}
 		});
 	}
@@ -192,7 +197,7 @@ public class PacketServer {
 		try {
 			server.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.catching(e);
 		}
 		serverThread.interrupt();
 		base.stop();

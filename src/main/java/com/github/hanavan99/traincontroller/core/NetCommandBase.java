@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 import com.github.hanavan99.traincontroller.net.packets.CommandPacket;
 
@@ -14,6 +15,8 @@ public class NetCommandBase extends LionelBase {
 	private Socket socket;
 	private ObjectOutputStream out;
 	private User user;
+
+	private static final org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.LogManager.getLogger();
 
 	public NetCommandBase(String hostname, int port, User user) {
 		this.hostname = hostname;
@@ -59,7 +62,7 @@ public class NetCommandBase extends LionelBase {
 			try {
 				out.writeObject(command);
 			} catch (IOException e) {
-				System.out.println("Failed to write a packet");
+				logger.catching(e);
 			}
 		}
 	}
@@ -343,7 +346,7 @@ public class NetCommandBase extends LionelBase {
 			socket = new Socket(hostname, port);
 			out = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
-			System.out.println("Failed to create socket");
+			logger.catching(e);
 			socket = null;
 			out = null;
 		}
@@ -356,7 +359,7 @@ public class NetCommandBase extends LionelBase {
 			socket = null;
 			out = null;
 		} catch (IOException e) {
-
+			logger.catching(e);
 		}
 	}
 

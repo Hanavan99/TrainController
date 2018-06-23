@@ -10,7 +10,6 @@ import com.github.hanavan99.traincontroller.core.Commands;
 import com.github.hanavan99.traincontroller.core.Engine;
 import com.github.hanavan99.traincontroller.core.Resource;
 import com.github.hanavan99.traincontroller.core.Switch;
-import com.github.hanavan99.traincontroller.core.enums.CommandSet;
 import com.github.hanavan99.traincontroller.core.enums.CommandType;
 import com.github.hanavan99.traincontroller.core.enums.RequestType;
 import com.github.hanavan99.traincontroller.net.packets.CommandPacket;
@@ -19,14 +18,16 @@ import com.github.hanavan99.traincontroller.net.packets.ResponsePacket;
 
 public class CommandClient {
 
+	private static final org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.LogManager.getLogger();
+
 	public static void main(String[] args) {
 
 		try {
-			System.out.println("Connecting to server...");
+			logger.info("Connecting to server...");
 			Socket socket = new Socket(args[0], Integer.parseInt(args[1]));
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-			System.out.println("Connected. Enter commands or \"/exit\" to quit.");
+			logger.info("Connected. Enter commands or \"/exit\" to quit.");
 			Scanner s = new Scanner(System.in);
 			String command;
 			while (!(command = s.nextLine()).equals("/exit")) {
@@ -62,18 +63,18 @@ public class CommandClient {
 					case "/engines":
 						out.writeObject(new RequestPacket(RequestType.GET_ENGINES, null, null));
 						for (Engine e : (Engine[]) ((ResponsePacket) in.readObject()).getArgs()) {
-							System.out.println(e);
+							logger.info(e);
 						}
 						break;
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.catching(e);
 				}
 			}
 			s.close();
 			socket.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.catching(e);
 		}
 
 	}

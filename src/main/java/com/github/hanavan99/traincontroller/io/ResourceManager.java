@@ -29,6 +29,8 @@ public class ResourceManager {
 	private ArrayList<Accessory> accessories = new ArrayList<Accessory>();
 	private ArrayList<Route> routes = new ArrayList<Route>();
 
+	private static final org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.LogManager.getLogger();
+
 	public ResourceManager(File directory) {
 		this.directory = directory;
 	}
@@ -88,8 +90,6 @@ public class ResourceManager {
 	}
 
 	public void updateSwitch(Switch sw) {
-		System.out.println(sw);
-		System.out.println(switches);
 		int index = switches.indexOf(sw);
 		if (index != -1) {
 			switches.set(index, sw);
@@ -124,9 +124,9 @@ public class ResourceManager {
 			result = (ArrayList<T>) in.readObject();
 			in.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.catching(e);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.catching(e);
 		}
 		return result;
 	}
@@ -137,7 +137,7 @@ public class ResourceManager {
 			out.writeObject(list);
 			out.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.catching(e);
 		}
 	}
 
