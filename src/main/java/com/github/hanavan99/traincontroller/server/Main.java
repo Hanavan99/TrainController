@@ -14,7 +14,7 @@ public class Main {
     private static final Logger log = LogManager.getLogger();
 
     public static void main(String[] args) {
-        EmbeddedRabbitMqConfig config = new EmbeddedRabbitMqConfig.Builder().build();
+        EmbeddedRabbitMqConfig config = new EmbeddedRabbitMqConfig.Builder().rabbitMqServerInitializationTimeoutInMillis(10000).build();
         EmbeddedRabbitMq rabbitMq = new EmbeddedRabbitMq(config);
         try {
             rabbitMq.start();
