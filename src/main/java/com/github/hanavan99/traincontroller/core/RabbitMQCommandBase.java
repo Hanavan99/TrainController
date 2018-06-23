@@ -9,7 +9,10 @@ import com.rabbitmq.client.ConnectionFactory;
 
 public class RabbitMQCommandBase extends SerialCommandBase {
 
-	public RabbitMQCommandBase(String portName, CommandSet commandSet) {
+	private String address;
+
+	public RabbitMQCommandBase(String address, String portName, CommandSet commandSet) {
+		this.address = address;
 		setPortName(portName);
 		setCommandSet(commandSet);
 	}
@@ -34,7 +37,7 @@ public class RabbitMQCommandBase extends SerialCommandBase {
 	public void start() {
 		try {
 			ConnectionFactory factory = new ConnectionFactory();
-			factory.setHost("192.168.1.247");
+			factory.setHost(address);
 			factory.setVirtualHost("/");
 			factory.setUsername("root");
 			factory.setPassword("root");
