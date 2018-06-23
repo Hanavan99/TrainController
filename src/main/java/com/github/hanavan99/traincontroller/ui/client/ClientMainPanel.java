@@ -1,11 +1,11 @@
 package com.github.hanavan99.traincontroller.ui.client;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,17 +16,15 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.github.hanavan99.traincontroller.core.Engine;
-import com.github.hanavan99.traincontroller.core.RabbitMQCommandBase;
+import com.github.hanavan99.traincontroller.core.RabbitMQCommandBase2;
 import com.github.hanavan99.traincontroller.core.Switch;
-import com.github.hanavan99.traincontroller.core.enums.CommandSet;
 import com.github.hanavan99.traincontroller.core.enums.CommandType;
-import com.github.hanavan99.traincontroller.core.enums.RequestType;
-import com.github.hanavan99.traincontroller.net.packets.RequestPacket;
-import com.github.hanavan99.traincontroller.net.packets.ResponsePacket;
 
 public class ClientMainPanel extends JPanel {
 
 	private static final long serialVersionUID = -5535166103376983096L;
+
+	private static final Font font = new Font("Arial", Font.PLAIN, 20);
 
 	private JTabbedPane pane = new JTabbedPane();
 	private JPanel enginePanel = new JPanel();
@@ -45,7 +43,7 @@ public class ClientMainPanel extends JPanel {
 
 	public ClientMainPanel(String address) throws IOException {
 
-		final RabbitMQCommandBase base = new RabbitMQCommandBase(address, "ttyS0", CommandSet.TMCC);
+		final RabbitMQCommandBase2 base = new RabbitMQCommandBase2(address);
 		base.start();
 		// final ObjectInputStream in = base.createObjectInputStream();
 
@@ -68,11 +66,14 @@ public class ClientMainPanel extends JPanel {
 		// TEST CODE ONLY
 		engines.addItem(new Engine(85, "BNSF SD70ACe"));
 		switches.addItem(new Switch(1, "Main Switch 1"));
+		base.createSwitch(new Switch(1, "Main Switch 1"));
+		base.setSwitchID(new Switch(1, "Main Switch 1"));
 		switches.addItem(new Switch(2, "Main Switch 2"));
 
 		setLayout(null);
 
-		pane.setBounds(10, 10, 225, 500);
+		pane.setBounds(10, 10, 780, 460);
+		pane.setFont(font);
 		add(pane);
 		pane.add("Engine", enginePanel);
 		pane.add("Switch", switchPanel);
@@ -80,10 +81,12 @@ public class ClientMainPanel extends JPanel {
 		enginePanel.setLayout(null);
 		switchPanel.setLayout(null);
 
-		engines.setBounds(10, 10, 200, 20);
+		engines.setBounds(10, 10, 300, 30);
+		engines.setFont(font);
 		enginePanel.add(engines);
 
-		horn.setBounds(10, 40, 95, 20);
+		horn.setBounds(10, 50, 145, 30);
+		horn.setFont(font);
 		enginePanel.add(horn);
 		// horn.getModel().addChangeListener(new ChangeListener() {
 		// @Override
@@ -127,7 +130,8 @@ public class ClientMainPanel extends JPanel {
 
 		});
 
-		bell.setBounds(115, 40, 95, 20);
+		bell.setBounds(165, 50, 145, 30);
+		bell.setFont(font);
 		enginePanel.add(bell);
 		bell.addActionListener(new ActionListener() {
 
@@ -137,7 +141,8 @@ public class ClientMainPanel extends JPanel {
 			}
 		});
 
-		rev.setBounds(10, 70, 95, 20);
+		rev.setBounds(10, 90, 145, 30);
+		rev.setFont(font);
 		enginePanel.add(rev);
 		rev.addActionListener(new ActionListener() {
 			@Override
@@ -146,7 +151,8 @@ public class ClientMainPanel extends JPanel {
 			}
 		});
 
-		fwd.setBounds(115, 70, 95, 20);
+		fwd.setBounds(165, 90, 145, 30);
+		fwd.setFont(font);
 		enginePanel.add(fwd);
 		fwd.addActionListener(new ActionListener() {
 			@Override
@@ -155,7 +161,7 @@ public class ClientMainPanel extends JPanel {
 			}
 		});
 
-		speeddown.setBounds(10, 100, 95, 20);
+		speeddown.setBounds(10, 120, 95, 20);
 		// enginePanel.add(speeddown);
 		speeddown.addActionListener(new ActionListener() {
 			@Override
@@ -173,7 +179,7 @@ public class ClientMainPanel extends JPanel {
 			}
 		});
 
-		speed.setBounds(10, 100, 200, 20);
+		speed.setBounds(10, 130, 300, 30);
 		speed.setMinimum(0);
 		speed.setMaximum(31);
 		speed.setMajorTickSpacing(1);
@@ -186,10 +192,12 @@ public class ClientMainPanel extends JPanel {
 			}
 		});
 
-		switches.setBounds(10, 10, 200, 20);
+		switches.setBounds(10, 10, 300, 30);
+		switches.setFont(font);
 		switchPanel.add(switches);
 
-		switchthrough.setBounds(10, 40, 95, 20);
+		switchthrough.setBounds(10, 50, 145, 30);
+		switchthrough.setFont(font);
 		switchPanel.add(switchthrough);
 		switchthrough.addActionListener(new ActionListener() {
 			@Override
@@ -198,7 +206,8 @@ public class ClientMainPanel extends JPanel {
 			}
 		});
 
-		switchout.setBounds(115, 40, 95, 20);
+		switchout.setBounds(165, 50, 145, 30);
+		switchout.setFont(font);
 		switchPanel.add(switchout);
 		switchout.addActionListener(new ActionListener() {
 			@Override
