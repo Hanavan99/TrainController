@@ -1,7 +1,9 @@
 apply plugin: "java"
 
 repositories {
+    mavenCentral()
 }
 
 dependencies {
+    compile "com.fazecast:jSerialComm:2.0.2"
 }
