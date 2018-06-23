@@ -6,15 +6,37 @@ import com.github.hanavan99.traincontroller.core.enums.CommandSet;
 public class SerialCommandBase extends LionelBase {
 
 	private CommandSet commandSet;
+	private String portName;
 	private SerialPort port;
 
-	public SerialCommandBase(SerialPort port, CommandSet commandSet) {
+	public SerialCommandBase() {
+
+	}
+
+	public SerialCommandBase(String portName, CommandSet commandSet) {
+		port = SerialPort.getCommPort(portName);
 		port.setBaudRate(9600);
 		port.setNumDataBits(8);
 		port.setNumStopBits(1);
 		port.setParity(SerialPort.NO_PARITY);
-		this.port = port;
+		this.portName = portName;
 		this.commandSet = commandSet;
+	}
+
+	public CommandSet getCommandSet() {
+		return commandSet;
+	}
+
+	public void setCommandSet(CommandSet commandSet) {
+		this.commandSet = commandSet;
+	}
+
+	public String getPortName() {
+		return portName;
+	}
+
+	public void setPortName(String portName) {
+		this.portName = portName;
 	}
 
 	@Override
