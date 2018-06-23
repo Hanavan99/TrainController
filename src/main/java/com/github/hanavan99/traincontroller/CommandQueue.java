@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class CommandQueue extends Thread {
-    private static final int PERIOD = 500;
+    private static final int PERIOD = 100;
     private static final Logger log = LogManager.getLogger();
     private final Channel channel;
     private final Semaphore commandLock;

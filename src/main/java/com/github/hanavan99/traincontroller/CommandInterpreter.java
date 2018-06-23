@@ -26,6 +26,7 @@ public class CommandInterpreter {
             Channel channel = conn.createChannel();
             CommandQueue cmd = new CommandQueue(channel, "ttyS0");
             new DataContext(channel, cmd);
+            cmd.start();
             log.info("Command interpreter is now running.");
             Thread.sleep(Long.MAX_VALUE);
         } catch (Exception ex) {
