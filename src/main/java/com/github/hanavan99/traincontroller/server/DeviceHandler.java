@@ -42,6 +42,6 @@ public class DeviceHandler extends TopicConsumer {
     public DeviceHandler(Channel channel, SerialPort port) throws IOException {
         super(channel, String.format(TopicNames.DEVICE_TOPIC, port.getSystemPortName()));
         this.port = port;
-        log.info("Found serial port %s.", port.getSystemPortName());
+        log.info("Found serial port {}.", port.getSystemPortName());
     }
 }
