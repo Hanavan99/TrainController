@@ -1,9 +1,5 @@
 package com.github.hanavan99.traincontroller;
 
-import java.io.IOException;
-
-import com.github.hanavan99.traincontroller.core.RabbitMQCommandBase;
-import com.github.hanavan99.traincontroller.core.enums.CommandSet;
 import com.github.hanavan99.traincontroller.model.DataContext;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -13,9 +9,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class CommandInterpreter {
+    private static final long SAVE_PERIOD = 5000;
     private static final Logger log = LogManager.getLogger();
 
     public static void main(String[] args) {
+        DataContext data = null;
         try {
             ConnectionFactory factory = new ConnectionFactory();
             factory.setHost("192.168.1.247");
@@ -25,12 +23,19 @@ public class CommandInterpreter {
             Connection conn = factory.newConnection();
             Channel channel = conn.createChannel();
             CommandQueue cmd = new CommandQueue(channel, "ttyS0");
-            new DataContext(channel, cmd);
+            data = new DataContext(channel, cmd);
+            data.load();
             cmd.start();
             log.info("Command interpreter is now running.");
-            Thread.sleep(Long.MAX_VALUE);
+            while (true) {
+                Thread.sleep(SAVE_PERIOD);
+                data.save();
+            }
         } catch (Exception ex) {
             log.catching(ex);
+            if (data != null) {
+                data.save();
+            }
         }
     }
 }

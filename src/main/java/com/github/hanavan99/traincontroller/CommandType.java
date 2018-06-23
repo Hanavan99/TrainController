@@ -40,7 +40,7 @@ public enum CommandType {
     EngineCommandMomentumMedium(CommandSet.TMCC1EngineRaw, 0x29, 0, "momentumMedium"),
     EngineCommandMomentumHigh(CommandSet.TMCC1EngineRaw, 0x2a, 0, "momentumHigh"),
     EngineCommandSetAddress(CommandSet.TMCC1EngineRaw, 0x2b, 0, "setAddress"),
-    EngineCommandSpeedAbsolute(CommandSet.TMCC1EngineExtraCommandBit, 3, -1, "speedAbsolute"),
+    EngineCommandSpeedAbsolute(CommandSet.TMCC1Engine, 3, -1, "speedAbsolute"),
     EngineCommandSpeedRelative(CommandSet.TMCC1EngineExtraCommandBit, 4, -1, "speedRelative");
 
     private final CommandSet set;

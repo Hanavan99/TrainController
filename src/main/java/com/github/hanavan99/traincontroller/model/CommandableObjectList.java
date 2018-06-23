@@ -1,11 +1,12 @@
 package com.github.hanavan99.traincontroller.model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.github.hanavan99.traincontroller.CommandQueue;
-import com.github.hanavan99.traincontroller.TopicNames;
 import com.rabbitmq.client.Channel;
 
 public abstract class CommandableObjectList {
@@ -15,6 +16,7 @@ public abstract class CommandableObjectList {
 
     public abstract String getObjectType();
     public abstract CommandableObject create(String name) throws IOException;
+    public abstract CommandableObject create(Map<String, String> properties);
 
     public CommandQueue getCommandBase() {
         return cmd;
@@ -58,6 +60,23 @@ public abstract class CommandableObjectList {
 
     public CommandableObject[] getValues() {
         return list.values().toArray(new CommandableObject[0]);
+    }
+
+    public void load(List<Map<String, String>> data) throws IOException {
+        list.clear();
+        for (Map<String, String> entity : data) {
+            CommandableObject obj = create(entity);
+            list.put(obj.getName(), obj);
+            obj.registerAll();
+        }
+    }
+
+    public List<Map<String, String>> save() {
+        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+        for (CommandableObject obj : getValues()) {
+            data.add(obj.properties);
+        }
+        return data;
     }
 
     public CommandableObjectList(Channel channel, CommandQueue cmd) throws IOException {

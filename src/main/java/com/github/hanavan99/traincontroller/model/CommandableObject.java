@@ -16,10 +16,10 @@ import org.apache.logging.log4j.Logger;
 
 public abstract class CommandableObject {
     private static final Logger log = LogManager.getLogger();
-    private final Map<String, String> properties;
     private final List<TopicConsumer> subscriptions;
     private final Channel channel;
     private final CommandQueue cmd;
+    final Map<String, String> properties;
     final CommandableObjectList list;
 
     public Channel getChannel() {
@@ -84,5 +84,13 @@ public abstract class CommandableObject {
         this.list = list;
         this.cmd = cmd;
         properties.put("name", name);
+    }
+
+    public CommandableObject(Channel channel, CommandableObjectList list, Map<String, String> properties, CommandQueue cmd) {
+        this.properties = properties;
+        subscriptions = new ArrayList<TopicConsumer>();
+        this.channel = channel;
+        this.list = list;
+        this.cmd = cmd;
     }
 }

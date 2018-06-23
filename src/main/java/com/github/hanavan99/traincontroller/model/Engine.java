@@ -1,6 +1,7 @@
 package com.github.hanavan99.traincontroller.model;
 
 import java.io.IOException;
+import java.util.Map;
 
 import com.github.hanavan99.traincontroller.CommandQueue;
 import com.github.hanavan99.traincontroller.CommandType;
@@ -73,5 +74,9 @@ public class Engine extends CommandableObject {
 
     public Engine(Channel channel, EngineList list, String name, CommandQueue cmd) throws IOException {
         super(channel, list, name, cmd);
+    }
+
+    public Engine(Channel channel, EngineList list, Map<String, String> properties, CommandQueue cmd) {
+        super(channel, list, properties, cmd);
     }
 }

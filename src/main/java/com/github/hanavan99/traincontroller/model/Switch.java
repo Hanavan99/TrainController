@@ -1,6 +1,7 @@
 package com.github.hanavan99.traincontroller.model;
 
 import java.io.IOException;
+import java.util.Map;
 
 import com.github.hanavan99.traincontroller.TopicNames;
 import com.github.hanavan99.traincontroller.CommandQueue;
@@ -20,6 +21,11 @@ public class Switch extends CommandableObject {
 
     public Switch(Channel channel, SwitchList list, String name, CommandQueue cmd, RouteList routes) throws IOException {
         super(channel, list, name, cmd);
+        this.routes = routes;
+    }
+
+    public Switch(Channel channel, SwitchList list, Map<String, String> properties, CommandQueue cmd, RouteList routes) {
+        super(channel, list, properties, cmd);
         this.routes = routes;
     }
 }
