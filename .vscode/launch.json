@@ -17,6 +17,17 @@
         },
         {
             "type": "java",
+            "name": "TrainController Server Device List (Test)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "com.github.hanavan99.traincontroller.server.DeviceListProviderTest",
+            "projectName": "TrainController",
+            "args": ""
+        },
+        {
+            "type": "java",
             "name": "Debug (Attach)",
             "request": "attach",
             "hostName": "localhost",
