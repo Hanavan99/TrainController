@@ -18,7 +18,7 @@ public enum CommandSet {
         return constant
             | ((address & ((1 << address_length) - 1)) << address_start)
             | ((command & ((1 << command_length) - 1)) << command_start)
-            | ((command & ((1 << data_length) - 1)) << data_start);
+            | ((data & ((1 << data_length) - 1)) << data_start);
     }
 
     CommandSet(int constant, int address_start, int address_length, int command_start, int command_length, int data_start, int data_length) {
