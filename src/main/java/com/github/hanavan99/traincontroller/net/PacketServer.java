@@ -185,7 +185,7 @@ public class PacketServer {
 
 	public void start() {
 		manager.loadResources();
-		base = new SerialCommandBase(SerialPort.getCommPort(comPort), CommandSet.TMCC);
+		base = new SerialCommandBase(comPort, CommandSet.TMCC);
 		base.start();
 		createThreads();
 		serverThread.start();
