@@ -25,7 +25,7 @@ public abstract class CommandableObjectList {
     }
 
     public void sendUpdates() throws IOException {
-        channel.basicPublish(String.format(TopicNames.OBJECT_LIST, getObjectType()), "", null, String.join("\n", getNames()).getBytes("UTF-8"));
+        //channel.basicPublish(String.format(TopicNames.OBJECT_LIST, getObjectType()), "", null, String.join("\n", getNames()).getBytes("UTF-8"));
     }
 
     public void add(String name) throws IOException {
