@@ -13,7 +13,7 @@ public abstract class EngineCommandConsumer extends TopicConsumer {
     private final Engine engine;
     private final CommandType command;
 
-    public abstract void handle(CommandQueue queue, CommandType command, int address) throws IOException;
+    public abstract void handle(CommandQueue queue, CommandType command, int address, int data) throws IOException;
 
     @Override
     public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {

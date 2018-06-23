@@ -12,7 +12,7 @@ public class ListObjectConsumer extends TopicConsumer {
     private final CommandableObjectList list;
 
     @Override
-    public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
+    public void handleDeliverySafe(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
         String res = String.join("\n", list.getNames());
         getChannel().basicPublish("", properties.getReplyTo(),
                 new BasicProperties.Builder().correlationId(properties.getCorrelationId()).build(), res.getBytes("UTF-8"));

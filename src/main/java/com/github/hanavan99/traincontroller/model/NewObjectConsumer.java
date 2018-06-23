@@ -16,7 +16,7 @@ public class NewObjectConsumer extends TopicConsumer {
     private final CommandableObjectList list;
 
     @Override
-    public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
+    public void handleDeliverySafe(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
         String name = new String(body, "UTF-8");
         if (list.exists(name)) {
             log.warn("Object with name '{}' already exists", name);

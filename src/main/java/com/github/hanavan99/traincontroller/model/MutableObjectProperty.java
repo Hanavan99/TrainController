@@ -12,7 +12,7 @@ public class MutableObjectProperty extends TopicConsumer {
     private final String propertyName;
 
     @Override
-    public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
+    public void handleDeliverySafe(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
         if (body.length == 0) {
             // get
             getChannel().basicPublish("", properties.getReplyTo(),

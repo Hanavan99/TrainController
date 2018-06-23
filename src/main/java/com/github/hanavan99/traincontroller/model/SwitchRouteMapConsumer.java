@@ -18,7 +18,7 @@ public class SwitchRouteMapConsumer extends TopicConsumer {
     private final CommandType command;
 
     @Override
-    public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
+    public void handleDeliverySafe(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
         String routeName = new String(body, "UTF-8");
         for (CommandableObject route : routes.getValues()) {
             if (route.getName() == routeName) {

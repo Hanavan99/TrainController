@@ -13,7 +13,7 @@ public class RouteClearConsumer extends TopicConsumer {
     private final Route route;
 
     @Override
-    public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
+    public void handleDeliverySafe(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
         route.getCommandBase().runOnce(CommandType.RouteClear, route.getID());
     }
 

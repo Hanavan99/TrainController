@@ -17,7 +17,7 @@ public class SwitchThrowConsumer extends TopicConsumer {
     private final Switch s;
 
     @Override
-    public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
+    public void handleDeliverySafe(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
         String mode = new String(body, "UTF-8");
         switch (mode) {
             case "through":

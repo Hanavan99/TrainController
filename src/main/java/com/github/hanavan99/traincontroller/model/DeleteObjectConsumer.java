@@ -12,7 +12,7 @@ public class DeleteObjectConsumer extends TopicConsumer {
     private final CommandableObject obj;
 
     @Override
-    public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
+    public void handleDeliverySafe(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException {
         obj.list.delete(obj);
     }
 
